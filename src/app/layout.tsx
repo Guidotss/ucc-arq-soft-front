@@ -18,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} slate-50`}>
-        <Navbar />
+        <header className="flex justify-center ">
+          <Navbar />
+        </header>
         {children}
       </body>
     </html>

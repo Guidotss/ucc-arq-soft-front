@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRef } from "react";
 import { FaArrowDown } from "react-icons/fa";
 
-
 export const MainSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   return (
@@ -45,31 +44,31 @@ export const MainSection = () => {
       <section
         ref={ref}
         id="more"
-        className="w-full h-screen flex bg-slate-50 p-10 justify-around"
+        className="w-full h-screen flex justify-between bg-slate-50 p-10"
       >
         {/* Random size image */}
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid 2xl:grid-cols-4 lg:grid-cols-2 2xl:gap-5 lg:gap-2 align-middle">
           <Image
             src="/assets/images/boy.jpg"
             alt="Random Image"
             width={500}
             height={500}
-            className="rounded-xl shadow-sm h-[60vh]"
+            className="rounded-xl shadow-md lg:w-96 2xl:h-[60vh] lg:h-[90vh] col-span-1"
           />
-          <div className="flex flex-col gap-y-5">
+          <div className="flex flex-col gap-y-3 col-span-1">
             <Image
               src="/assets/images/computer-girl.jpg"
               alt="Random Image"
               width={600}
               height={600}
-              className="rounded-xl object-cover shadow-sm w-full"
+              className="rounded-xl object-cover shadow-md 2xl:w-full w-96"
             />
             <Image
               src="/assets/images/computer-hands.jpg"
               alt="Random Image"
               width={500}
               height={500}
-              className="rounded-xl object-cover shadow-sm w-full"
+              className="rounded-xl object-cover shadow-md 2xl:w-full w-96"
             />
           </div>
         </div>
@@ -78,18 +77,21 @@ export const MainSection = () => {
           style={{ flex: 1 }}
         />
 
-        <div>
-          <h1 className="text-xl font-bold text-slate-950">Learn a new language</h1>
-          <p className="text-xl text-slate-950">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            euismod, urna non feugiat luctus, sapien metus placerat lacus, nec
-            varius odio nunc nec justo. Sed auctor, nunc in fermentum ultricies,
-            erat metus tincidunt felis, nec varius odio nunc nec justo. Sed
-            auctor, nunc in fermentum ultricies, erat metus tincidunt felis.
+        <div className="w-96">
+          <h1 className="text-2xl mb-3 font-bold text-slate-950">
+            Learn a new language
+          </h1>
+          {/* add description */}
+          <p className="text-lg text-slate-950">
+            At <strong>DuoMingo</strong>, we believe in the power of language to connect and
+            inspire. Our expert, native-speaking instructors use immersive,
+            interactive methods to help you achieve your language goals. With
+            flexible scheduling and a supportive learning environment, we make
+            language learning accessible and enjoyable. Join us and start your
+            language journey today!
           </p>
         </div>
       </section>
-    
     </>
   );
 };
