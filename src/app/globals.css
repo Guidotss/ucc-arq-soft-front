@@ -3,3 +3,6 @@
 @tailwind utilities;
 
 
+.navbar-button {
+    @apply w-40 text-slate-50 text-center bg-purple-700 py-3 text-lg font-semibold tracking-tight cursor-pointer hover:bg-opacity-70 transition-all duration-300 ease-in-out rounded-lg;
+}

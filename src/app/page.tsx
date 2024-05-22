@@ -1,4 +1,4 @@
-import { Navbar, MainSection } from "@/components";
+import { MainSection } from "@/components";
 
 export default function Home() {
   return (

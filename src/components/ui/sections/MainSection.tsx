@@ -14,7 +14,7 @@ export const MainSection = () => {
             autoPlay
             loop
             muted
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-b-lg filte"
             src="/assets/table.mp4"
           />
 
@@ -43,32 +43,32 @@ export const MainSection = () => {
       </section>
       <section
         ref={ref}
-        id="more"
-        className="w-full h-screen flex justify-between bg-slate-50 p-10"
+        id="about"
+        className="w-full h-screen flex items-center justify-between gap-x-10 bg-slate-50 p-10 mt-10"
       >
         {/* Random size image */}
-        <div className="grid 2xl:grid-cols-4 lg:grid-cols-2 2xl:gap-5 lg:gap-2 align-middle">
+        <div className="grid 2xl:grid-cols-2 lg:grid-cols-2 2xl:gap-10 lg:gap-2">
           <Image
             src="/assets/images/boy.jpg"
             alt="Random Image"
             width={500}
             height={500}
-            className="rounded-xl shadow-md lg:w-96 2xl:h-[60vh] lg:h-[90vh] col-span-1"
+            className="rounded-xl shadow-lg lg:w-96 2xl:w-[50vw] 2xl:h-[69vh] lg:h-[90vh] col-span-1"
           />
-          <div className="flex flex-col gap-y-3 col-span-1">
+          <div className="flex flex-col gap-y-6 col-span-1 h-full">
             <Image
               src="/assets/images/computer-girl.jpg"
               alt="Random Image"
               width={600}
               height={600}
-              className="rounded-xl object-cover shadow-md 2xl:w-full w-96"
+              className="rounded-xl object-cover shadow-lg 2xl:w-full w-96 2xl:h-[33vh]"
             />
             <Image
               src="/assets/images/computer-hands.jpg"
               alt="Random Image"
               width={500}
               height={500}
-              className="rounded-xl object-cover shadow-md 2xl:w-full w-96"
+              className="rounded-xl object-cover shadow-lg 2xl:w-full w-96 2xl: h-[33vh]"
             />
           </div>
         </div>
@@ -76,13 +76,11 @@ export const MainSection = () => {
           className="flex flex-col justify-center items-center gap-y-5"
           style={{ flex: 1 }}
         />
-
-        <div className="w-96">
-          <h1 className="text-2xl mb-3 font-bold text-slate-950">
+        <div className="lg:w-96 2xl:w-full flex flex-col">
+          <h1 className="text-4xl mb-4 font-bold text-slate-950">
             Learn a new language
           </h1>
-          {/* add description */}
-          <p className="text-lg text-slate-950">
+          <p className="text-xl leading-9 text-slate-950">
             At <strong>DuoMingo</strong>, we believe in the power of language to connect and
             inspire. Our expert, native-speaking instructors use immersive,
             interactive methods to help you achieve your language goals. With
