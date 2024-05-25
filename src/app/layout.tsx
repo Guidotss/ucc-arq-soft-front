@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "@/providers";
 import { Navbar } from "@/components";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,18 @@ export default function RootLayout({
             <Navbar />
           </header>
           {children}
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+            gutter={8}
+            toastOptions={{
+              duration: 5000,
+              style: {
+                background: "#333",
+                color: "#fff",
+              },
+            }}
+          />
         </body>
       </Providers>
     </html>

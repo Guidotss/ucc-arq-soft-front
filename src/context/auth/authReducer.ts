@@ -1,3 +1,4 @@
+"use client"
 import { User } from "@/types";
 import { AuthState } from ".";
 

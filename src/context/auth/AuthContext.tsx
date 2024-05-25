@@ -1,3 +1,4 @@
+"use client"
 import { LoginDto, RegisterDto, User } from "@/types";
 import { createContext } from "react";
 

@@ -1,3 +1,4 @@
+"use client";
 import { useReducer, FC, useEffect } from "react";
 import cookies from "js-cookie";
 import { AuthContext, authReducer } from ".";
@@ -42,7 +43,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
           },
           body: JSON.stringify(registerDto),
         }
@@ -72,19 +72,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         showToast("Please fill in all fields", "error");
         return false;
       }
-      const reponse = await fetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
+          method: "POST", 
           body: JSON.stringify(loginDto),
-        }
+        },
       );
-      if (reponse.ok) {
-        const data: AuthResponse = await reponse.json();
+      console.log(response); 
+      if (response.ok) {
+        const data: AuthResponse = await response.json();
         cookies.set("token", data.token);
         dispatch({
           type: "[Auth] - Login",
@@ -113,9 +110,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
         }
       );
@@ -129,7 +124,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         dispatch({ type: "[Auth] - Logout" });
       }
     } catch (error) {
-      console.log(error);
       dispatch({ type: "[Auth] - Logout" });
     }
   };
