@@ -1,8 +1,9 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { FaArrowDown } from "react-icons/fa";
+import { CoursesList } from "@/components/courses";
 
 export const MainSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -81,14 +82,17 @@ export const MainSection = () => {
             Learn a new language
           </h1>
           <p className="text-xl leading-9 text-slate-950">
-            At <strong>DuoMingo</strong>, we believe in the power of language to connect and
-            inspire. Our expert, native-speaking instructors use immersive,
-            interactive methods to help you achieve your language goals. With
-            flexible scheduling and a supportive learning environment, we make
-            language learning accessible and enjoyable. Join us and start your
-            language journey today!
+            At <strong>DuoMingo</strong>, we believe in the power of language to
+            connect and inspire. Our expert, native-speaking instructors use
+            immersive, interactive methods to help you achieve your language
+            goals. With flexible scheduling and a supportive learning
+            environment, we make language learning accessible and enjoyable.
+            Join us and start your language journey today!
           </p>
         </div>
+      </section>
+      <section className="bg-slate-950">
+        <CoursesList />
       </section>
     </>
   );
