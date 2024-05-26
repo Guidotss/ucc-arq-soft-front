@@ -14,7 +14,10 @@ export const authReducer = (
     case "[Auth] - Login":
       return {
         ...state,
-        user: action.payload.userData,
+        user: { 
+          ...action.payload.userData,
+          role: Number(action.payload.userData.role) === 0 ? "user" : "admin",
+        },
         token: action.payload.token,
       };
     case "[Auth] - Logout":

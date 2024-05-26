@@ -1,12 +1,15 @@
 "use client";
+import { useContext } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { NavbarButtons } from ".";
 import { useNavbar } from "@/utils";
+import { AuthContext } from '@/context';
 
 export const Navbar = () => {
   const { ref, bgColor, pathname, handleNavigateAbout, handleNavigateHome } =
     useNavbar();
+
   return (
     <div
       ref={ref}

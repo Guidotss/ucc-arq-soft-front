@@ -52,7 +52,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         cookies.set("token", data.token);
         dispatch({
           type: "[Auth] - Login",
-          payload: { userData: data.data, token: data.token },
+          payload: { userData: data.user, token: data.token },
         });
         showToast("Account created successfully", "success");
         return true;
@@ -75,17 +75,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
         {
-          method: "POST", 
+          method: "POST",
           body: JSON.stringify(loginDto),
-        },
+        }
       );
-      console.log(response); 
       if (response.ok) {
         const data: AuthResponse = await response.json();
-        cookies.set("token", data.token);
+
         dispatch({
           type: "[Auth] - Login",
-          payload: { userData: data.data, token: data.token },
+          payload: { userData: data.user, token: data.token },
         });
         showToast("Login successful", "success");
         return true;
@@ -110,7 +109,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -118,7 +117,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         const data: AuthResponse = await reponse.json();
         dispatch({
           type: "[Auth] - Login",
-          payload: { userData: data.data, token: data.token },
+          payload: { userData: data.user, token: data.token },
         });
       } else {
         dispatch({ type: "[Auth] - Logout" });

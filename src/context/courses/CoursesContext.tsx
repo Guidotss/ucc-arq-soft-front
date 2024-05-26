@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import { createContext } from "react";
-import { CreateCoursesDto } from "@/types";
+import { Course, CreateCoursesDto } from "@/types";
 
 interface CoursesContextProps {
-  courses: any[];
+  courses: Course[];
   createCourse: (course: CreateCoursesDto) => void;
   deleteCourse: (id: string) => void;
   updateCourse: (course: any) => void;

@@ -1,10 +1,19 @@
+import { useContext } from "react";
 import Link from "next/link";
+import { AuthContext } from "@/context";
 
 export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+
   if (pathName === "/") {
-    return (
+    return !user ? (
       <Link href="/auth/login">
         <p className="navbar-button">Get Started</p>
+      </Link>
+    ) : (
+      <Link href="/dashboard">
+        <p className="navbar-button">Dashboard</p>
       </Link>
     );
   }

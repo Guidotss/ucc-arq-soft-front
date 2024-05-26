@@ -91,7 +91,7 @@ export const MainSection = () => {
           </p>
         </div>
       </section>
-      <section className="bg-slate-950">
+      <section className="bg-slate-50">
         <CoursesList />
       </section>
     </>

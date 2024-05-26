@@ -3,6 +3,6 @@ import { User } from "@/types";
 export type AuthResponse = {
     ok: boolean;
     message: string; 
-    data: User
+    user: User
     token: string;
 }

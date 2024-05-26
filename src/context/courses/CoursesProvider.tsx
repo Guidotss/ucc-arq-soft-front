@@ -1,9 +1,9 @@
-"use client"
+"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useReducer, FC, useEffect } from "react";
 import { CoursesContext, coursesReducer } from ".";
 import { CreateCoursesDto } from "@/types";
-import { useToast } from "@/utils";
+import { courseMapper, useToast } from "@/utils";
 
 interface CoursesProviderProps {
   children: React.ReactNode;
@@ -27,9 +27,10 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         const reponse = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/courses`
         );
-        const data = await reponse.json();
         if (reponse.ok) {
-          dispatch({ type: "[Courses] - Load All", payload: data });
+          const data = await reponse.json();
+          const courses = data.map((course: any) => courseMapper(course));
+          dispatch({ type: "[Courses] - Load All", payload: courses });
         }
       } catch (error) {
         console.log(error);
