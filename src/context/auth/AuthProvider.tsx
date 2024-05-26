@@ -91,7 +91,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       }
       return false;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       showToast("An error occurred", "error");
       cookies.remove("token");
       return false;
