@@ -1,3 +1,3 @@
 import { RegisterDto } from ".";
 
-export type LoginDto = Omit<RegisterDto, "userName">;
+export type LoginDto = Omit<RegisterDto, "Username">;

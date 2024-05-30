@@ -9,7 +9,7 @@ export const CoursesList = () => {
   console.log(courses)
 
   return (
-    <div className="flex justify-between p-10">
+    <div className="grid grid-cols-2 p-10 gap-5">
       {courses.map((course) => (
         <CourseCard
           key={course.id}

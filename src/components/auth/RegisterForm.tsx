@@ -9,19 +9,19 @@ import { useRouter } from "next/navigation";
 import { RegisterDto } from "@/types";
 
 type RegisterForm = {
-  userName: string;
-  email: string;
-  password: string;
+  Username: string;
+  Email: string;
+  Password: string;
 };
 
 export const RegisterForm = () => {
   const schema = yup.object().shape({
-    userName: yup.string().required("Name is required"),
-    email: yup
+    Username: yup.string().required("Name is required"),
+    Email: yup
       .string()
       .email("Email is not valid")
       .required("Email is required"),
-    password: yup.string().required("Password is required").min(6),
+      Password: yup.string().required("Password is required").min(6),
   });
 
   const router = useRouter();
@@ -52,33 +52,33 @@ export const RegisterForm = () => {
         type="text"
         placeholder="Name"
         className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        {...rhfRegister("userName")}
+        {...rhfRegister("Username")}
       />
-      {errors.userName && (
+      {errors.Username && (
         <span className="text-red-500 text-sm font-light -mt-3">
-          {errors.userName.message}
+          {errors.Username.message}
         </span>
       )}
       <input
         type="email"
         placeholder="Email"
         className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        {...rhfRegister("email")}
+        {...rhfRegister("Email")}
       />
-      {errors.email && (
+      {errors.Email && (
         <span className="text-red-500 text-sm font-light -mt-3">
-          {errors.email.message}
+          {errors.Email.message}
         </span>
       )}
       <input
         type="password"
         placeholder="Password"
         className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        {...rhfRegister("password")}
+        {...rhfRegister("Password")}
       />
-      {errors.password && (
+      {errors.Password && (
         <span className="text-red-500 text-sm font-light -mt-3">
-          {errors.password.message}
+          {errors.Password.message}
         </span>
       )}
       <button className="p-3 bg-purple-700 text-white rounded-lg font-semibold tracking-wider hover:bg-opacity-80 transition-all duration-300 ease-in-out">

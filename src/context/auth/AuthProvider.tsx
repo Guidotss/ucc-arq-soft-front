@@ -30,13 +30,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const register = async (registerDto: RegisterDto): Promise<boolean> => {
     try {
       if (
-        !registerDto.email ||
-        !registerDto.password ||
-        !registerDto.userName
+        !registerDto.Username ||
+        !registerDto.Email    ||
+        !registerDto.Password
       ) {
         showToast("Please fill in all fields", "error");
         return false;
       }
+      console.log("RegisterDTO: ", registerDto)
       const reponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
         {
@@ -68,7 +69,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (loginDto: LoginDto): Promise<boolean> => {
     try {
-      if (!loginDto.email || !loginDto.password) {
+      if (!loginDto.Email || !loginDto.Password) {
         showToast("Please fill in all fields", "error");
         return false;
       }
@@ -91,7 +92,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       }
       return false;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       showToast("An error occurred", "error");
       cookies.remove("token");
       return false;
