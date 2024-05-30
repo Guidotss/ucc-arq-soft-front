@@ -2,7 +2,7 @@ import { Course } from "@/types";
 import Image from "next/image";
 
 interface CourseCardProps {
-    course: Course
+  course: Course;
 }
 export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
   return (
@@ -20,11 +20,11 @@ export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
         className="rounded-lg object-cover w-full h-full shadow-xs"
       />
       <div className="flex flex-col p-5">
-        <h1 className="text-lg text-center mb-2 font-semibold tracking-wide capitalize">{course.courseName}</h1>
-        <p
-            className="text-sm text-start text-gray-500 text-pretty capitalize"
-        >
-            {course.description}
+        <h1 className="text-lg text-center mb-2 font-semibold tracking-wide capitalize">
+          {course.courseName}
+        </h1>
+        <p className="text-sm text-start text-gray-500 text-pretty capitalize">
+          {course.description}
         </p>
       </div>
     </div>
