@@ -9,17 +9,17 @@ import { AuthContext } from "@/context";
 import { LoginDto } from "@/types";
 
 type LoginForm = {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
 };
 
 export const LoginForm = () => {
   const schema = yup.object().shape({
-    email: yup
+    Email: yup
       .string()
       .email("Email is not valid")
       .required("Email is required"),
-    password: yup.string().required("Password is required").min(6),
+    Password: yup.string().required("Password is required").min(6),
   });
 
   const router = useRouter();
@@ -51,22 +51,22 @@ export const LoginForm = () => {
         type="email"
         placeholder="Email"
         className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        {...register("email")}
+        {...register("Email")}
       />
-      {errors.email && (
+      {errors.Email && (
         <span className="text-red-500 text-sm font-light -mt-3">
-          {errors.email.message}
+          {errors.Email.message}
         </span>
       )}
       <input
         type="password"
         placeholder="Password"
         className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        {...register("password")}
+        {...register("Password")}
       />
-      {errors.email && (
+      {errors.Email && (
         <span className="text-red-500 text-sm font-light -mt-3">
-          {errors.email.message}
+          {errors.Email.message}
         </span>
       )}
       <button className="p-3 bg-purple-700 text-white rounded-lg font-semibold tracking-wider hover:bg-opacity-80 transition-all duration-300 ease-in-out">
