@@ -9,7 +9,7 @@ export const CoursesList = () => {
   console.log(courses)
 
   return (
-    <div className="grid grid-cols-2 p-10 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 p-10 gap-5">
       {courses.map((course) => (
         <CourseCard
           key={course.id}

@@ -2,11 +2,11 @@
 import { useReducer, FC, useEffect } from "react";
 import cookies from "js-cookie";
 import { AuthContext, authReducer } from ".";
-import { LoginDto, RegisterDto, AuthResponse } from "@/types";
+import { LoginDto, RegisterDto, AuthResponse, User } from "@/types";
 import { useToast } from "@/utils";
 
 export interface AuthState {
-  user: any;
+  user: User | null;
   token: string;
 }
 
@@ -31,13 +31,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     try {
       if (
         !registerDto.Username ||
-        !registerDto.Email    ||
+        !registerDto.Email ||
         !registerDto.Password
       ) {
         showToast("Please fill in all fields", "error");
         return false;
       }
-      console.log("RegisterDTO: ", registerDto)
+      console.log("RegisterDTO: ", registerDto);
       const reponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
         {
@@ -55,7 +55,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
           type: "[Auth] - Login",
           payload: { userData: data.user, token: data.token },
         });
-        showToast("Account created successfully", "success");
         return true;
       }
       return false;
@@ -87,7 +86,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
           type: "[Auth] - Login",
           payload: { userData: data.user, token: data.token },
         });
-        showToast("Login successful", "success");
+        cookies.set("token", data.token);
         return true;
       }
       return false;

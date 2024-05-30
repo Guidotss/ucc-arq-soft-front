@@ -10,7 +10,7 @@ export const useNavbar = () => {
   useEffect(() => {
     if (pathname.includes("auth")) {
       console.log(pathname.includes("auth"));
-      setBgColor("bg-slate-950 bg-opacity-40");
+      setBgColor("bg-navbar");
     } else if (pathname === "/") {
       setBgColor("bg-transparent");
     }
@@ -24,7 +24,7 @@ export const useNavbar = () => {
     if (pathname.includes("auth")) return;
     const scrollHandler = () => {
       if (window.scrollY > 500) {
-        setBgColor("bg-slate-950 bg-opacity-50");
+        setBgColor("bg-navbar");
       } else {
         setBgColor("bg-transparent");
       }
