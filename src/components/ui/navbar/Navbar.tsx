@@ -7,7 +7,7 @@ import { useNavbar } from "@/utils";
 import { AuthContext } from '@/context';
 
 export const Navbar = () => {
-  const { ref, bgColor, pathname, handleNavigateAbout, handleNavigateHome } =
+  const { ref, bgColor, pathname, handleNavigateAbout, handleNavigateHome , handleNavigateCourses } =
     useNavbar();
 
   return (
@@ -31,9 +31,9 @@ export const Navbar = () => {
         <button onClick={handleNavigateAbout} className="text-white">
           About
         </button>
-        <a href="#contact" className="text-white">
-          Contact
-        </a>
+        <button onClick={handleNavigateCourses} className="text-white">
+          Courses
+        </button>
       </nav>
       <NavbarButtons pathName={pathname} />
     </div>

@@ -8,12 +8,11 @@ export const useNavbar = () => {
   const [bgColor, setBgColor] = useState<string>("");
 
   useEffect(() => {
-    if (pathname.includes("auth")) {
-      console.log(pathname.includes("auth"));
+    if (pathname.includes("auth") || pathname.includes("courses")) {
       setBgColor("bg-navbar");
     } else if (pathname === "/") {
       setBgColor("bg-transparent");
-    }
+    } 
 
     return () => {
       setBgColor("");
@@ -58,6 +57,16 @@ export const useNavbar = () => {
       router.push("/");
     }
   };
+  const handleNavigateCourses = () => {
+    if (pathname === "/") {
+      window.scrollTo({
+        top: ref?.current?.offsetHeight! + window.innerHeight + 350,
+        behavior: "smooth",
+      });
+    } else {
+      router.push("/#courses");
+    }
+  }
 
   return {
     ref,
@@ -65,6 +74,7 @@ export const useNavbar = () => {
     
     handleNavigateHome,
     handleNavigateAbout,
+    handleNavigateCourses,
     pathname,
   }
 };

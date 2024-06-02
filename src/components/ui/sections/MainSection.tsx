@@ -91,8 +91,8 @@ export const MainSection = () => {
           </p>
         </div>
       </section>
-      <section className="bg-slate-50">
-        <CoursesList />
+      <section className="bg-slate-50" id="courses">
+        <CoursesList/>
       </section>
     </>
   );
