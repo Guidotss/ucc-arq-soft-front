@@ -1,9 +1,11 @@
-import { CreateCoursesDto } from "@/types";
+import { Course, CreateCoursesDto } from "@/types";
 import { CoursesState } from ".";
 
 type CoursesAction =
-  | { type: "[Courses] - Load All"; payload: any[] }
-  | { type: "[Courses] - Create"; payload: CreateCoursesDto };
+  | { type: "[Courses] - Load All"; payload: Course[] }
+  | { type: "[Courses] - Create"; payload: Course }
+  | { type: "[Courses] - Filter"; payload: Course[] };
+
 
 export const coursesReducer = (
   state: CoursesState,
@@ -14,11 +16,17 @@ export const coursesReducer = (
       return {
         ...state,
         courses: action.payload,
+        coursesFiltered: action.payload,
       };
     case "[Courses] - Create":
       return {
         ...state,
         courses: [...state.courses, action.payload],
+      };
+    case "[Courses] - Filter":
+      return {
+        ...state,
+        coursesFiltered: action.payload,
       };
     default:
       return state;

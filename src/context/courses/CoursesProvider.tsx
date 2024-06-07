@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useReducer, FC, useEffect } from "react";
 import { CoursesContext, coursesReducer } from ".";
-import { CreateCoursesDto } from "@/types";
+import { Course, CreateCoursesDto } from "@/types";
 import { courseMapper, useToast } from "@/utils";
 
 interface CoursesProviderProps {
@@ -10,11 +10,13 @@ interface CoursesProviderProps {
 }
 
 export interface CoursesState {
-  courses: any[];
+  courses: Course[];
+  coursesFiltered: Course[];
 }
 
 const COURSES_INITIAL_STATE: CoursesState = {
   courses: [],
+  coursesFiltered: [],
 };
 
 export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
@@ -42,12 +44,25 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   }, []);
 
   const createCourse = (course: CreateCoursesDto) => {
-    dispatch({ type: "[Courses] - Create", payload: course });
+    dispatch({ type: "[Courses] - Create", payload: course as unknown as Course});
   };
 
   const deleteCourse = (id: string) => {};
   const updateCourse = (course: any) => {};
-
+  const filterCourses = async (search: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/courses?filter=${search}`
+      );
+      const data = await response.json();
+      const courses = data.map((course: any) => courseMapper(course));
+      dispatch({ type: "[Courses] - Filter", payload: courses });
+    }
+    catch (error) {
+      console.log(error);
+      showToast("Error al filtrar los cursos", "error");
+    }
+  };
   return (
     <CoursesContext.Provider
       value={{
@@ -55,6 +70,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         createCourse,
         deleteCourse,
         updateCourse,
+        filterCourses,
       }}
     >
       {children}

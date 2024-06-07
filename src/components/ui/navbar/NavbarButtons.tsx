@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { AuthContext } from "@/context";
+import { UserButton } from "./UserButton";
 
 export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
   const { user } = useContext(AuthContext);
@@ -12,9 +13,7 @@ export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
         <p className="navbar-button">Get Started</p>
       </Link>
     ) : (
-      <Link href="/dashboard">
-        <p className="navbar-button">{user.username}</p>
-      </Link>
+      <UserButton user={user} />
     );
   }
 

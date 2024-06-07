@@ -60,7 +60,7 @@ export const useNavbar = () => {
   const handleNavigateCourses = () => {
     if (pathname === "/") {
       window.scrollTo({
-        top: ref?.current?.offsetHeight! + window.innerHeight + 350,
+        top: ref?.current?.offsetHeight! + window.innerHeight + 650,
         behavior: "smooth",
       });
     } else {

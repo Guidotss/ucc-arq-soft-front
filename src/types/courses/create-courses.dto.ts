@@ -1,5 +1,5 @@
 export type CreateCoursesDto = { 
-    couseName: string; 
+    cousename: string; 
     description: string;
     price: number;
     duration: number;

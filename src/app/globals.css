@@ -32,7 +32,7 @@
   transition: transform 0.3s ease-in-out;
 }
 .swiper-slide div {
-  background: linear-gradient(135deg, #f6d365 0%, #b932f8 100%);
+  background: rgb(126 34 206 / var(--tw-bg-opacity))
 }
 .swiper-wrapper {	
   margin-top: 20px;
@@ -76,3 +76,91 @@
 .card-backgroud {
   background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
 }
+
+
+.card-swiper {
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid rgb(161, 79, 233); 
+  margin: 10px;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+.card-container h1, .card-container p {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background to ensure readability */
+  padding: 10px;
+  border-radius: 0.5rem;
+  }
+  .card-container h1 {
+    color: #333;
+    }
+    
+    .card-container p {
+    color: #666;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 48rem;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+    }
+    
+    .modal-image {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      width: 100%;
+    }
+    
+    .modal-details div {
+      background: #d8b4fe; /* Tailwind bg-purple-200 equivalent */
+      padding: 1rem;
+      border-radius: 0.375rem;
+    }
+    
+    .modal-details p {
+      margin: 0;
+    }

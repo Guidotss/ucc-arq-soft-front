@@ -6,17 +6,19 @@ import { useContext } from "react";
 
 interface CourseCardProps {
   course: Course;
+  onClick?: () => void;
 }
 const truncateText = (text: string, maxLength: number) => {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "...";
-};
-export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
+}; 
+export const CourseCard = ({ course , onClick}: Readonly<CourseCardProps>) => {
   const { user } = useContext(AuthContext);
   return (
     <div
       key={course.id}
       className="flex gap-5 bg-gray-300 m-3 mx-3 p-2 rounded-xl shadow-lg w-full max-h-80 2xl:w-[30vw] 2xl:min-h-96 cursor-pointer hover:shadow-2xl transition-all duration-300 ease-in-out"
+      onClick={onClick}
     >
       <div className="flex justify-between h-full">
         <Image
@@ -41,15 +43,7 @@ export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
           <p className="text-sm text-gray-500 text-pretty capitalize  ">
           {truncateText(course.description, 60)}
           </p>
-          <div className="h-full w-full flex items-end">
-            <button
-              className={`${
-                user ? "bg-purple-500" : "bg-orange-500"
-              } w-full text-white px-5 py-2 rounded-lg mt-5 hover:bg-opacity-80 transition-all duration-300 ease-in-out`}
-            >
-              {user ? "Enroll" : "Login to Enroll"}
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
