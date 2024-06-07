@@ -6,14 +6,14 @@ export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
   const { user } = useContext(AuthContext);
   console.log(user);
 
-  if (pathName === "/") {
+  if (pathName === "/" || pathName.includes("/courses")){
     return !user ? (
       <Link href="/auth/login">
         <p className="navbar-button">Get Started</p>
       </Link>
     ) : (
       <Link href="/dashboard">
-        <p className="navbar-button">Dashboard</p>
+        <p className="navbar-button">{user.username}</p>
       </Link>
     );
   }
@@ -33,6 +33,14 @@ export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
       </Link>
     );
   }
+  if (pathName.includes("/courses")) {
+    return (
+      <Link href="/auth/login">
+        <p className="navbar-button">Login</p>
+      </Link>
+    );
+  }
+  
 
   return null;
 };

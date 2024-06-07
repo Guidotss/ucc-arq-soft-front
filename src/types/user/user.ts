@@ -3,7 +3,7 @@ import { UserRole } from ".";
 export type User  = {
   id: string;
   email: string;
-  userName: string;
+  username: string;
   avatar: string;
   role: UserRole;
   createdAt: Date;

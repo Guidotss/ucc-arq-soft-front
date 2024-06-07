@@ -1,14 +1,20 @@
 "use client";
-import { useContext } from 'react';
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NavbarButtons } from ".";
+import { NavbarButtons, NavBarMainButtons } from ".";
 import { useNavbar } from "@/utils";
-import { AuthContext } from '@/context';
+import { AuthContext } from "@/context";
 
 export const Navbar = () => {
-  const { ref, bgColor, pathname, handleNavigateAbout, handleNavigateHome , handleNavigateCourses } =
-    useNavbar();
+  const {
+    ref,
+    bgColor,
+    pathname,
+    handleNavigateAbout,
+    handleNavigateHome,
+    handleNavigateCourses,
+  } = useNavbar();
 
   return (
     <div
@@ -24,17 +30,13 @@ export const Navbar = () => {
         />
         <h1 className="text-3xl text-white tracking-tighter">DuoMingo</h1>
       </Link>
-      <nav className="flex items-center gap-10">
-        <button className="text-white" onClick={handleNavigateHome}>
-          Home
-        </button>
-        <button onClick={handleNavigateAbout} className="text-white">
-          About
-        </button>
-        <button onClick={handleNavigateCourses} className="text-white">
-          Courses
-        </button>
-      </nav>
+        <NavBarMainButtons
+          pathname={pathname}
+          handleNavigateAbout={handleNavigateAbout}
+          handleNavigateHome={handleNavigateHome}
+          handleNavigateCourses={handleNavigateCourses}
+        />
+
       <NavbarButtons pathName={pathname} />
     </div>
   );

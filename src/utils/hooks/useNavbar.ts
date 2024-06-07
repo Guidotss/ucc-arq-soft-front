@@ -24,7 +24,7 @@ export const useNavbar = () => {
     const scrollHandler = () => {
       if (window.scrollY > 500) {
         setBgColor("bg-navbar");
-      } else {
+      } else if (window.scrollY < 500 && pathname === "/"){
         setBgColor("bg-transparent");
       }
     };

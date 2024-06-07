@@ -5,8 +5,8 @@ export default function CoursesPage() {
 
   return (
     <main className="mt-32">
-        <section className="flex flex-col items-center justify-center py-10 bg-slate-800 h-auto">
-            <h1 className="text-4xl font-bold text-center text-white mb-3">
+        <section className="flex flex-col items-center justify-center py-2 bg-slate-800 h-auto">
+            <h1 className="text-4xl font-bold text-center text-white mb-10 mt-3">
               Top Courses
             </h1>
         <CourseCarrusel/>

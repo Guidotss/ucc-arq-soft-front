@@ -11,7 +11,7 @@ export const CoursesList = () => {
 
   return (
     <div className="flex flex-col justify-center p-">
-      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 p-10 gap-5rounded-sm" >
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 p-10 gap-x-10 " >
 
         {courses.slice(0,4).map((course) => (
           <CourseCard

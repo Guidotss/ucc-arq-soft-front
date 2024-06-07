@@ -7,6 +7,10 @@ import { useContext } from "react";
 interface CourseCardProps {
   course: Course;
 }
+const truncateText = (text: string, maxLength: number) => {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+};
 export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
   const { user } = useContext(AuthContext);
   return (
@@ -34,8 +38,8 @@ export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
             </p>
           </div>
 
-          <p className="text-sm text-gray-500 text-pretty capitalize">
-            {course.description}
+          <p className="text-sm text-gray-500 text-pretty capitalize  ">
+          {truncateText(course.description, 60)}
           </p>
           <div className="h-full w-full flex items-end">
             <button
