@@ -29,6 +29,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         );
         if (reponse.ok) {
           const data = await reponse.json();
+          console.log(data);
           const courses = data.map((course: any) => courseMapper(course));
           dispatch({ type: "[Courses] - Load All", payload: courses });
         }

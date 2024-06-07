@@ -9,7 +9,7 @@ export const MainSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   return (
     <>
-      <section className="w-full">
+      <section className="w-full  bg-violet-50">
         <div className="h-[100vh]">
           <video
             autoPlay
@@ -93,6 +93,11 @@ export const MainSection = () => {
       </section>
       <section className="bg-slate-50" id="courses">
         <CoursesList/>
+        <div className="flex justify-center ">
+        <Link href="/courses" className="bg-purple-600 text-white rounded-md px-10 py-1 mb-4 hover:bg-opacity-80 duration-300 ease-in-out transition-all">
+          View All
+        </Link>
+      </div>
       </section>
     </>
   );

@@ -7,4 +7,5 @@ export type CreateCoursesDto = {
     categoryId: string;
     initDate: Date;
     state: boolean;
+    image: string;
 }

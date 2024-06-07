@@ -9,4 +9,6 @@ export type Course = {
   initDate: Date;
   state: boolean;
   image: string;
+  ratingavg: number; 
+  categoryName: string;
 };

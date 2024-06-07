@@ -9,3 +9,67 @@
 .bg-navbar {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+
+.swiper_container {
+  height: 30rem;
+  /*padding: 2rem 0;*/
+  padding: 20px;
+  position: relative;
+}
+
+.swiper-slide {
+  width: 37rem;
+  height: 27rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+.swiper-slide div {
+  background: linear-gradient(135deg, #f6d365 0%, #b932f8 100%);
+}
+
+.swiper-slide:hover {
+  transform: scale(1.05);
+  border-radius: 1rem;
+}
+.swiper-slide img {
+  width: 32rem;
+  height: 22rem;
+  border-radius: 2rem;
+  object-fit: cover;
+}
+
+.rounded-t-xl {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.swiper-slide img {
+  width: 32rem;
+  height: 22rem;
+  border-radius: 2rem;
+  object-fit: cover;
+}
+.card-container {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  
+}
+
+.card-background {
+  background: linear-gradient(135deg, #f6d365 0%, #b932f8 100%);
+}

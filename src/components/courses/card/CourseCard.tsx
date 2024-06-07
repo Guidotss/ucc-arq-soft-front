@@ -12,7 +12,7 @@ export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
   return (
     <div
       key={course.id}
-      className="flex gap-5 bg-gray-50 rounded-xl shadow-lg w-full max-h-80 2xl:w-[30vw] 2xl:min-h-96 cursor-pointer hover:shadow-2xl transition-all duration-300 ease-in-out"
+      className="flex gap-5 bg-gray-300 m-3 mx-3 p-2 rounded-xl shadow-lg w-full max-h-80 2xl:w-[30vw] 2xl:min-h-96 cursor-pointer hover:shadow-2xl transition-all duration-300 ease-in-out"
     >
       <div className="flex justify-between h-full">
         <Image
@@ -40,7 +40,7 @@ export const CourseCard = ({ course }: Readonly<CourseCardProps>) => {
           <div className="h-full w-full flex items-end">
             <button
               className={`${
-                user ? "bg-purple-600" : "bg-orange-500"
+                user ? "bg-purple-500" : "bg-orange-500"
               } w-full text-white px-5 py-2 rounded-lg mt-5 hover:bg-opacity-80 transition-all duration-300 ease-in-out`}
             >
               {user ? "Enroll" : "Login to Enroll"}
