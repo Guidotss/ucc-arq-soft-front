@@ -1,11 +1,13 @@
-import { Course, CreateCoursesDto } from "@/types";
+import { Category, Course, CreateCoursesDto } from "@/types";
 import { CoursesState } from ".";
 
 type CoursesAction =
   | { type: "[Courses] - Load All"; payload: Course[] }
   | { type: "[Courses] - Create"; payload: Course }
   | { type: "[Courses] - Filter"; payload: Course[] }
-  | { type: "[Courses] - My Courses"; payload: Course[] };
+  | { type: "[Courses] - My Courses"; payload: Course[] }
+  | { type: "[Category] - New Category"; payload: Category }
+  | { type: "[Categories] - Load All Categories"; payload: Category[] }
 
 
 export const coursesReducer = (
@@ -33,6 +35,16 @@ export const coursesReducer = (
       return {
         ...state,
         coursesFiltered: action.payload,
+      };
+    case "[Category] - New Category":
+      return {
+        ...state,
+        categories: [...state.categories, action.payload],
+      };
+    case "[Categories] - Load All Categories":
+      return {
+        ...state,
+        categories: action.payload,
       };
     default:
       return state;

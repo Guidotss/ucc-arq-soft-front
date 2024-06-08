@@ -15,6 +15,23 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }: { addUtilities: Function }) {
+      addUtilities({
+        '.no-spinner': {
+          '-moz-appearance': 'textfield',
+          '-webkit-appearance': 'none',
+          '&::-webkit-outer-spin-button': {
+            '-webkit-appearance': 'none',
+            'margin': 0,
+          },
+          '&::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+            'margin': 0,
+          },
+        },
+      });
+    },
+  ],
 };
 export default config;

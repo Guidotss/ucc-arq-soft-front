@@ -1,7 +1,9 @@
 "use client"
-import { useState } from "react";
+import { useState , useContext} from "react";
 import { User } from "@/types";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { AuthContext } from "@/context";
 
 interface UserButtonProps {
   user: User;
@@ -9,7 +11,8 @@ interface UserButtonProps {
 
 export const UserButton = ({ user }: UserButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { logout } = useContext(AuthContext);
+  const pathname = usePathname(); // Corrección aquí
   return (
     <div 
       className="relative inline-block"
@@ -29,11 +32,13 @@ export const UserButton = ({ user }: UserButtonProps) => {
           <Link href="/profile">
             <span className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My Profile</span>
           </Link>
-          <Link href="/my-courses">
-            <span className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My Courses</span>
-          </Link>
+          {pathname !== "/my-courses" && (
+            <Link href="/my-courses">
+              <span className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My Courses</span>
+            </Link>
+          )}
           <button 
-            onClick={() => {/* lógica de cerrar sesión */}}
+            onClick={logout}
             className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
           >
             Signout

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Course } from "@/types";
 import Image from "next/image";
 import { AuthContext } from "@/context";
@@ -11,8 +11,10 @@ interface CourseModalProps {
 
 export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => {
   const { user } = useContext(AuthContext);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    setIsVisible(true);
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "auto";
@@ -25,12 +27,13 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-3xl relative flex flex-col"
+        className="bg-white rounded-lg shadow-2xl w-full max-w-3xl relative flex flex-col transform transition-transform duration-300 ease-in-out"
         onClick={handleModalClick}
+        style={{ transform: isVisible ? 'scale(1)' : 'scale(0.95)' }}
       >
         <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4">
           <h1 className="text-3xl font-bold text-white mb-2">{course.courseName}</h1>

@@ -1,4 +1,4 @@
-import { AuthProvider, CoursesProvider } from "@/context";
+import { AuthProvider, CoursesProvider, UiProvider } from "@/context";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -6,9 +6,9 @@ interface ProvidersProps {
 export const Providers = ({ children }: ProvidersProps) => {
   return (
     <AuthProvider>
-      <CoursesProvider>
-        {children}
-      </CoursesProvider>
+      <UiProvider>
+        <CoursesProvider>{children}</CoursesProvider>
+      </UiProvider>
     </AuthProvider>
   );
 };

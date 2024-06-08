@@ -39,7 +39,7 @@ export const useNavbar = () => {
   const handleNavigateAbout = () => {
     if (pathname === "/") {
       window.scrollTo({
-        top: ref?.current?.offsetHeight! + window.innerHeight,
+        top: ref?.current?.offsetHeight! + window.innerHeight - 80,
         behavior: "smooth",
       });
     } else {
@@ -60,7 +60,7 @@ export const useNavbar = () => {
   const handleNavigateCourses = () => {
     if (pathname === "/") {
       window.scrollTo({
-        top: ref?.current?.offsetHeight! + window.innerHeight + 650,
+        top: ref?.current?.offsetHeight! + window.innerHeight + 850,
         behavior: "smooth",
       });
     } else {

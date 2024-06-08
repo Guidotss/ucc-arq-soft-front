@@ -7,7 +7,7 @@ export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
   const { user } = useContext(AuthContext);
   console.log(user);
 
-  if (pathName === "/" || pathName.includes("/courses")){
+  if (pathName === "/" || pathName.includes("/courses") || pathName.includes("/my-courses")){
     return !user ? (
       <Link href="/auth/login">
         <p className="navbar-button">Get Started</p>

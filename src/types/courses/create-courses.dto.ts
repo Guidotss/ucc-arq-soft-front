@@ -1,11 +1,11 @@
 export type CreateCoursesDto = { 
-    cousename: string; 
+    course_name: string; 
     description: string;
     price: number;
     duration: number;
     capacity: number;
-    categoryId: string;
-    initDate: Date;
+    category_id: string;
+    init_date: string;
     state: boolean;
     image: string;
 }
