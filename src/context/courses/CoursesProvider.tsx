@@ -5,7 +5,6 @@ import { CoursesContext, coursesReducer } from ".";
 import { Course, CreateCoursesDto } from "@/types";
 import { courseMapper, useToast } from "@/utils";
 import Cookies from "js-cookie";
-import { headers } from "next/headers";
 
 interface CoursesProviderProps {
   children: React.ReactNode;
@@ -46,7 +45,10 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   }, []);
 
   const createCourse = (course: CreateCoursesDto) => {
-    dispatch({ type: "[Courses] - Create", payload: course as unknown as Course});
+    dispatch({
+      type: "[Courses] - Create",
+      payload: course as unknown as Course,
+    });
   };
 
   const deleteCourse = (id: string) => {};
@@ -59,8 +61,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       const data = await response.json();
       const courses = data.map((course: any) => courseMapper(course));
       dispatch({ type: "[Courses] - Filter", payload: courses });
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       showToast("Error al filtrar los cursos", "error");
     }
@@ -69,13 +70,15 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   const myCourses = async () => {
     const token = Cookies.get("token");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myCourses`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json", //this line solved cors
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/myCourses/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response);
       if (response.status !== 200) {
         showToast("Error al cargar mis cursos", "error");
@@ -88,7 +91,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       console.log(error);
       showToast("Error al cargar mis cursos", "error");
     }
-  }
+  };
   return (
     <CoursesContext.Provider
       value={{
