@@ -9,6 +9,7 @@ interface CoursesContextProps {
   deleteCourse: (id: string) => void;
   updateCourse: (course: any) => void;
   filterCourses: (search: string) => Promise<void>;
+  myCourses: (search: string) => Promise<void>;
 }
 
 export const CoursesContext = createContext({} as CoursesContextProps);

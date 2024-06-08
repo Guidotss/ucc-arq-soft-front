@@ -4,7 +4,8 @@ import { CoursesState } from ".";
 type CoursesAction =
   | { type: "[Courses] - Load All"; payload: Course[] }
   | { type: "[Courses] - Create"; payload: Course }
-  | { type: "[Courses] - Filter"; payload: Course[] };
+  | { type: "[Courses] - Filter"; payload: Course[] }
+  | { type: "[Courses] - My Courses"; payload: Course[] };
 
 
 export const coursesReducer = (
@@ -24,6 +25,11 @@ export const coursesReducer = (
         courses: [...state.courses, action.payload],
       };
     case "[Courses] - Filter":
+      return {
+        ...state,
+        coursesFiltered: action.payload,
+      };
+    case "[Courses] - My Courses":
       return {
         ...state,
         coursesFiltered: action.payload,

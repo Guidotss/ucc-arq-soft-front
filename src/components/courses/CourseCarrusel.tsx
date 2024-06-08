@@ -21,9 +21,10 @@ const truncateText = (text: string, maxLength: number) => {
 };
 interface CourseCarruselProps {
   handlerSelected: (course: Course) => void;
+  courses: Course[];
 }
-export const CourseCarrusel = ({handlerSelected}:CourseCarruselProps) => {
-  const { courses } = useContext(CoursesContext);
+export const CourseCarrusel = ({handlerSelected , courses}:CourseCarruselProps) => {
+
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   return (
     <>
@@ -52,7 +53,7 @@ export const CourseCarrusel = ({handlerSelected}:CourseCarruselProps) => {
       }}
       modules={[EffectCoverflow, Pagination, Navigation]}
     >
-      {courses.filter((course) => course.ratingavg > 2).map((course) => (
+      {courses.map((course) => (
         <SwiperSlide key={course.id} className="swiper-slide bg-transparent ">
           <div className="rounded-t-3xl rounded-xl flex flex-col justify-center 
           text-ellipsis overflow-hidden items-center p-4 pb-10 bg-white shadow-3xl 

@@ -1,12 +1,16 @@
 "use client"
-import { useState } from "react";
+import { useState , useContext} from "react";
 import { CourseCarrusel, CoursesList } from "@/components";
 import { CourseModal } from "@/components/courses/CourseDetail";
 import { Course } from "@/types";
+import { CoursesContext } from "@/context";
 export default function CoursesPage() {
 
+const { courses } = useContext(CoursesContext);	
+
 const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
-  return (
+  
+return (
     <main className="mt-32">
         {selectedCourse && (
           <CourseModal 
@@ -21,7 +25,7 @@ const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
             Top Courses
           </h1>
         </div>
-          <CourseCarrusel handlerSelected={setSelectedCourse}/>
+          <CourseCarrusel courses={courses.filter((course) => course.ratingavg >= 4)} handlerSelected={setSelectedCourse}/>
         </section>
         <section className="flex flex-col items-center justify-center 
               py-20 pt-0 bg-violet-200 m-5 rounded-2xl shadow-2xl mt-10">

@@ -4,6 +4,8 @@ import { useReducer, FC, useEffect } from "react";
 import { CoursesContext, coursesReducer } from ".";
 import { Course, CreateCoursesDto } from "@/types";
 import { courseMapper, useToast } from "@/utils";
+import Cookies from "js-cookie";
+import { headers } from "next/headers";
 
 interface CoursesProviderProps {
   children: React.ReactNode;
@@ -63,6 +65,30 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       showToast("Error al filtrar los cursos", "error");
     }
   };
+
+  const myCourses = async () => {
+    const token = Cookies.get("token");
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myCourses`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", //this line solved cors
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      if (response.status !== 200) {
+        showToast("Error al cargar mis cursos", "error");
+        return;
+      }
+      const data = await response.json();
+      const courses = data.map((course: any) => courseMapper(course));
+      dispatch({ type: "[Courses] - My Courses", payload: courses });
+    } catch (error) {
+      console.log(error);
+      showToast("Error al cargar mis cursos", "error");
+    }
+  }
   return (
     <CoursesContext.Provider
       value={{
@@ -71,6 +97,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         deleteCourse,
         updateCourse,
         filterCourses,
+        myCourses,
       }}
     >
       {children}
