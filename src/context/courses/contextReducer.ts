@@ -8,6 +8,8 @@ type CoursesAction =
   | { type: "[Courses] - My Courses"; payload: Course[] }
   | { type: "[Category] - New Category"; payload: Category }
   | { type: "[Categories] - Load All Categories"; payload: Category[] }
+  | { type: "[Courses] - Clean All" }
+  | {type : "[Courses] - Enroll"; payload: string};
 
 
 export const coursesReducer = (
@@ -34,7 +36,7 @@ export const coursesReducer = (
     case "[Courses] - My Courses":
       return {
         ...state,
-        coursesFiltered: action.payload,
+        enrollments: action.payload,
       };
     case "[Category] - New Category":
       return {
@@ -45,6 +47,17 @@ export const coursesReducer = (
       return {
         ...state,
         categories: action.payload,
+      };
+    case "[Courses] - Clean All":
+      return {
+        ...state,
+        enrollments: [],
+      };
+    case "[Courses] - Enroll":
+      const course = state.courses.find((course) => course.id === action.payload);
+      return {
+        ...state,
+        enrollments: [...state.enrollments, course!],
       };
     default:
       return state;

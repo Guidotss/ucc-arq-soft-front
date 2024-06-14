@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Course } from "@/types";
 import Image from "next/image";
-import { AuthContext } from "@/context";
+import { AuthContext, CoursesContext } from "@/context";
 
 interface CourseModalProps {
   course: Course;
@@ -11,8 +11,13 @@ interface CourseModalProps {
 
 export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => {
   const { user } = useContext(AuthContext);
+  const { enrollments, enroll } = useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
 
+  const isEnrolled = enrollments.some((enrollment) => enrollment.id === course.id);
+  console.log("isEnrolled: ", isEnrolled)
+  console.log("enrollments: ", enrollments);
+  console.log("course: ", course);
   useEffect(() => {
     setIsVisible(true);
     document.body.style.overflow = "hidden";
@@ -21,6 +26,11 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
     };
   }, []);
 
+  const handleEnroll = () => {
+    if (user && !isEnrolled) {
+      enroll(course.id);
+    }
+  }
   const handleModalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -77,11 +87,15 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
           </div>
           <div className="w-full mt-5">
             <button
-              className={`${
-                user ? "bg-gradient-to-r from-purple-600 to-pink-600" : "bg-orange-500"
+              className={`transition-all duration-300 ease-in-out ${
+                user && !isEnrolled ? "bg-gradient-to-r from-purple-600 to-pink-600 " : 
+                user && isEnrolled ? "bg-gradient-to-r from-green-500 to-blue-500" :
+                "bg-orange-500"
               } w-full text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300 ease-in-out`}
+              onClick={handleEnroll}
             >
-              {user ? "Enroll" : "Login to Enroll"}
+              {user && !isEnrolled ? "Enroll" : 
+              user && isEnrolled ? "Enrolled" : "Login to enroll"}
             </button>
           </div>
         </div>

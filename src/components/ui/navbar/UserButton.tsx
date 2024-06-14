@@ -3,7 +3,7 @@ import { useState , useContext} from "react";
 import { User } from "@/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AuthContext } from "@/context";
+import { AuthContext, CoursesContext } from "@/context";
 
 interface UserButtonProps {
   user: User;
@@ -12,7 +12,12 @@ interface UserButtonProps {
 export const UserButton = ({ user }: UserButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { logout } = useContext(AuthContext);
+  const { cleanCourseList } = useContext(CoursesContext);
   const pathname = usePathname(); // Corrección aquí
+  const handLogout = () => {
+    cleanCourseList();
+    logout();
+  }
   return (
     <div 
       className="relative inline-block"
@@ -38,7 +43,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
             </Link>
           )}
           <button 
-            onClick={logout}
+            onClick={handLogout}
             className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
           >
             Signout

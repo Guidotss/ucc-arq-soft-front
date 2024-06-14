@@ -60,7 +60,7 @@ export const CourseCarrusel = ({ handlerSelected, courses }: CourseCarruselProps
           swiperRef.current = swiper;
         }}
       >
-        {courses.map((course, index) => (
+        {courses?.length ? courses.map((course, index) => (
           <SwiperSlide key={course.id} className="swiper-slide bg-transparent">
             <div
               className="rounded-t-3xl rounded-xl flex flex-col justify-center 
@@ -83,7 +83,13 @@ export const CourseCarrusel = ({ handlerSelected, courses }: CourseCarruselProps
               </p>
             </div>
           </SwiperSlide>
-        ))}
+        )): 
+        (<div className="flex justify-center items-center w-full h-full">
+          <h1 className="text-2xl font-bold text-center text-white">
+            No hay cursos disponibles
+          </h1>
+        </div>
+          )}
       </Swiper>
     </>
   );

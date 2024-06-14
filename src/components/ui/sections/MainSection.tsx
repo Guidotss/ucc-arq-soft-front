@@ -1,13 +1,18 @@
 "use client";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaArrowDown } from "react-icons/fa";
 import { CoursesList } from "@/components/courses";
-import { AuthContext } from "@/context";
+import { AuthContext, CoursesContext } from "@/context";
 
 export const MainSection = () => {
   const { user } = useContext(AuthContext);
+  const { fetchCourses , myCourses} = useContext(CoursesContext);
+  useEffect(() => {
+    fetchCourses();
+    myCourses();
+  }, []);
   const ref = useRef<HTMLDivElement>(null);
   return (
     <>

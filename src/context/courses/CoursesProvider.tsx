@@ -7,6 +7,7 @@ import { courseMapper, useToast } from "@/utils";
 import Cookies from "js-cookie";
 
 
+
 interface CoursesProviderProps {
   children: React.ReactNode;
 }
@@ -15,12 +16,14 @@ export interface CoursesState {
   courses: Course[];
   coursesFiltered: Course[];
   categories: Category[];
+  enrollments: Course[];
 }
 
 const COURSES_INITIAL_STATE: CoursesState = {
   courses: [],
   coursesFiltered: [],
   categories: [],
+  enrollments: [],
 };
 
 export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
@@ -30,6 +33,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   useEffect(() => {
     getCategories();
     fetchCourses();
+    myCourses();
   }, []);
 
   const fetchCourses = async () => {
@@ -97,6 +101,9 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   const myCourses = async () => {
     const token = Cookies.get("token");
     try {
+      if (!token) {
+        return;
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/myCourses/`,
         {
@@ -107,12 +114,13 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         }
       );
       console.log(response);
-      if (response.status !== 200) {
+      if (response.status === 500) {
         showToast("Error al cargar mis cursos", "error");
         return;
       }
       const data = await response.json();
-      const courses = data.map((course: any) => courseMapper(course));
+      const courses =  data?.map((course: any) => courseMapper(course));
+      console.log("courses: ", courses)
       dispatch({ type: "[Courses] - My Courses", payload: courses });
     } catch (error) {
       console.log(error);
@@ -158,6 +166,36 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       showToast("Error al cargar las categorias", "error");
     }
   };
+  const enroll = async (courseId: string) => {
+    try{
+      const token = Cookies.get("token");
+      if(!token){
+        return;
+      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/enroll`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ course_id: courseId }),
+        }
+      );
+      if(response.status !== 201){
+        showToast("Error al inscribirse al curso", "error");
+        return;
+      }
+      dispatch({ type: "[Courses] - Enroll", payload: courseId });
+      showToast("Inscripción exitosa", "success");
+    }catch(error){
+      console.log(error);
+      showToast("Error al inscribirse al curso", "error");
+    }
+  }
+  const cleanCourseList = () => {
+    dispatch({ type: "[Courses] - Clean All" });
+  }
 
   return (
     <CoursesContext.Provider
@@ -170,6 +208,9 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         myCourses,
         newCategory,
         getCategories,
+        enroll,
+        cleanCourseList,
+        fetchCourses,
       }}
     >
       {children}

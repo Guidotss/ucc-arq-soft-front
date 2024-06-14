@@ -8,11 +8,8 @@ import { CoursesContext } from "@/context";
 
 
 export default function MyCoursesPage() {
-const { coursesFiltered , myCourses} = useContext(CoursesContext);
-useEffect(() => {
-    myCourses();
-  }, []);
-
+const { enrollments } = useContext(CoursesContext);
+console.log("enrollments: ", enrollments);
 const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   return (
     <main className="mt-32">
@@ -29,7 +26,7 @@ const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
             My Courses
           </h1>
         </div>
-          <CourseCarrusel courses={coursesFiltered} handlerSelected={setSelectedCourse}/>
+          <CourseCarrusel courses={enrollments} handlerSelected={setSelectedCourse}/>
         </section>
     </main>
   )

@@ -6,9 +6,9 @@ interface ProvidersProps {
 export const Providers = ({ children }: ProvidersProps) => {
   return (
     <AuthProvider>
-      <UiProvider>
-        <CoursesProvider>{children}</CoursesProvider>
-      </UiProvider>
+      <CoursesProvider>
+        <UiProvider>{children}</UiProvider>
+      </CoursesProvider>
     </AuthProvider>
   );
 };
