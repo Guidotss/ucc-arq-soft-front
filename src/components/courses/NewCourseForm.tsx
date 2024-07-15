@@ -1,13 +1,12 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import { AuthContext, CoursesContext , UiContext} from "@/context";
+import { AuthContext, CoursesContext, UiContext } from "@/context";
 import { uploadImage } from "@/utils";
 
 interface CreateCourseModalProps {
   onClose: () => void;
 }
-
 
 interface NewCategoryModalProps {
   onClose: () => void;
@@ -73,28 +72,28 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
   onClose,
 }) => {
   const { user } = useContext(AuthContext);
-  const {isEdit} = useContext(UiContext);
-  const { categories, newCategory, createCourse } = useContext(CoursesContext);
+  const { isEdit } = useContext(UiContext);
+  const { categories, newCategory, createCourse, currentCourse } =
+    useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [courseData, setCourseData] = useState({
-    course_name: "",
-    image: "",
-    description: "",
-    price: "",
-    duration: "",
-    capacity: "",
-    category: "",
-    initDate: "",
+    course_name: isEdit ? currentCourse?.courseName ?? "" : "",
+    image: isEdit ? currentCourse?.image ?? "" : "",
+    description: isEdit ? currentCourse?.description ?? "" : "",
+    price: isEdit ? currentCourse?.price : "",
+    duration: isEdit ? currentCourse?.duration : "",
+    capacity: isEdit ? currentCourse?.capacity : "",
+    category: isEdit ? currentCourse?.categoryId ?? "" : "",
+    initDate: isEdit ? currentCourse?.initDate ?? "" : new Date().toISOString().split("T")[0],
   });
-
-  console.log("isEdit: ", isEdit);
+  
   const handlerCreateCourse = () => {
     const data = {
       ...courseData,
-      price: parseFloat(courseData.price),
-      duration: parseInt(courseData.duration),
-      capacity: parseInt(courseData.capacity),
+      price: +courseData.price! || 0,
+      duration: +courseData.duration! || 0,
+      capacity: +courseData.duration! || 0,
       category_id: courseData.category,
       init_date: courseData.initDate,
       state: true,
@@ -103,6 +102,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
     onClose();
   };
 
+ 
   useEffect(() => {
     setIsVisible(true);
     document.body.style.overflow = "hidden";
@@ -110,7 +110,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
       document.body.style.overflow = "auto";
     };
   }, []);
-
+  
   const handlerFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     if (!file) return;
@@ -154,6 +154,8 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
       category: categoryName,
     }));
   };
+
+  
 
   return (
     <>
@@ -257,11 +259,14 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
                 onChange={handleSelectChange}
                 required
               >
-                <option value="">Select Category</option>
+                {!isEdit && <option value="">Select Category</option>}
                 {categories.map((category) => (
                   <option
                     key={category.category_id}
                     value={category.category_id}
+                    defaultChecked={
+                      category.category_id === courseData.category
+                    }
                   >
                     {category.category_name}
                   </option>
@@ -271,7 +276,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
               <input
                 type="date"
                 name="initDate"
-                value={courseData.initDate}
+                value={new Date(courseData.initDate).toISOString().split("T")[0]}
                 onChange={handleInputChange}
                 placeholder="Start Date"
                 className="bg-purple-100 p-4 rounded-lg shadow-sm text-md text-gray-800 border border-gray-300"
@@ -283,7 +288,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
                 className="bg-gradient-to-r from-purple-600 to-pink-600 w-full
                  text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 
                  transition-all duration-300 ease-in-out"
-                 type="submit"
+                type="submit"
               >
                 Create Course
               </button>

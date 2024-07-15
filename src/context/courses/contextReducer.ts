@@ -9,7 +9,8 @@ type CoursesAction =
   | { type: "[Category] - New Category"; payload: Category }
   | { type: "[Categories] - Load All Categories"; payload: Category[] }
   | { type: "[Courses] - Clean All" }
-  | {type : "[Courses] - Enroll"; payload: string};
+  | {type : "[Courses] - Enroll"; payload: string}
+  | {type : "[Courses] - Set Current"; payload: Course};
 
 
 export const coursesReducer = (
@@ -58,6 +59,11 @@ export const coursesReducer = (
       return {
         ...state,
         enrollments: [...state?.enrollments, course!],
+      };
+    case "[Courses] - Set Current":
+      return {
+        ...state,
+        currentCourse: action.payload,
       };
     default:
       return state;

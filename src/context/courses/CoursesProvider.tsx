@@ -6,14 +6,13 @@ import { Category, Course, CreateCoursesDto } from "@/types";
 import { courseMapper, useToast } from "@/utils";
 import Cookies from "js-cookie";
 
-
-
 interface CoursesProviderProps {
   children: React.ReactNode;
 }
 
 export interface CoursesState {
   courses: Course[];
+  currentCourse: Course | null;
   coursesFiltered: Course[];
   categories: Category[];
   enrollments: Course[];
@@ -21,6 +20,7 @@ export interface CoursesState {
 
 const COURSES_INITIAL_STATE: CoursesState = {
   courses: [],
+  currentCourse: null,
   coursesFiltered: [],
   categories: [],
   enrollments: [],
@@ -38,9 +38,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
 
   const fetchCourses = async () => {
     try {
-      const reponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/courses`
-      );
+      const reponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
       if (reponse.ok) {
         const data = await reponse.json();
         console.log(data);
@@ -51,12 +49,12 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       console.log(error);
       showToast("Error al cargar los cursos", "error");
     }
-  }
+  };
 
   const createCourse = async (course: CreateCoursesDto) => {
-    try{
+    try {
       const token = Cookies.get("token");
-      if(!token){
+      if (!token) {
         return;
       }
       const response = await fetch(
@@ -65,18 +63,18 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(course),
         }
       );
       const data = await response.json();
-      if(response.status !== 201){
+      if (response.status !== 201) {
         showToast("Error al crear el curso", "error");
         return;
       }
       dispatch({ type: "[Courses] - Create", payload: courseMapper(data) });
-    }catch(error){
+    } catch (error) {
       console.log(error);
       showToast("Error al crear el curso", "error");
     }
@@ -119,8 +117,8 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         return;
       }
       const data = await response.json();
-      const courses =  data?.map((course: any) => courseMapper(course));
-      console.log("courses: ", courses)
+      const courses = data?.map((course: any) => courseMapper(course));
+      console.log("courses: ", courses);
       dispatch({ type: "[Courses] - My Courses", payload: courses });
     } catch (error) {
       console.log(error);
@@ -167,9 +165,9 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
     }
   };
   const enroll = async (courseId: string) => {
-    try{
+    try {
       const token = Cookies.get("token");
-      if(!token){
+      if (!token) {
         return;
       }
       const response = await fetch(
@@ -182,20 +180,24 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
           body: JSON.stringify({ course_id: courseId }),
         }
       );
-      if(response.status !== 201){
+      if (response.status !== 201) {
         showToast("Error al inscribirse al curso", "error");
         return;
       }
       dispatch({ type: "[Courses] - Enroll", payload: courseId });
       showToast("Inscripción exitosa", "success");
-    }catch(error){
+    } catch (error) {
       console.log(error);
       showToast("Error al inscribirse al curso", "error");
     }
-  }
+  };
   const cleanCourseList = () => {
     dispatch({ type: "[Courses] - Clean All" });
-  }
+  };
+
+  const setCurrentCourse = (course: Course) => {
+    dispatch({ type: "[Courses] - Set Current", payload: course });
+  };
 
   return (
     <CoursesContext.Provider
@@ -211,6 +213,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
         enroll,
         cleanCourseList,
         fetchCourses,
+        setCurrentCourse,
       }}
     >
       {children}

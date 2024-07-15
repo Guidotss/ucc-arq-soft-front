@@ -24,13 +24,11 @@ export const UiProvider: FC<UiProviderProps> = ({ children }) => {
   const { showToast } = useToast();
 
   const openCreateModal = (isEdit?: boolean) => {
-    console.log("isEdit provider openCreateModal: ", isEdit)
     !!isEdit
       ? dispatch({ type: "[Ui] - Open Edit Modal" })
       : dispatch({ type: "[Ui] - Open Create Modal" });
   };
   const closeCreateModal = (isEdit?: boolean) => {
-    console.log("isEdit provider closeCreateModal: ", isEdit)
     !!isEdit
       ? dispatch({ type: "[Ui] - Close Edit Modal" })
       : dispatch({ type: "[Ui] - Close Create Modal" });

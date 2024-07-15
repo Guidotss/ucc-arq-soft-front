@@ -1,25 +1,28 @@
 "use client";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { Course } from "@/types";
 import Image from "next/image";
-import { AuthContext, CoursesContext , UiContext} from "@/context";
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { AuthContext, CoursesContext, UiContext } from "@/context";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 interface CourseModalProps {
   course: Course;
   onClose: () => void;
 }
 
-export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => {
+export const CourseModal: React.FC<CourseModalProps> = ({
+  course,
+  onClose,
+}) => {
   const { user } = useContext(AuthContext);
-  const { enrollments, enroll } = useContext(CoursesContext);
+  const { enrollments, enroll, setCurrentCourse } = useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
-  const {openCreateModal} = useContext(UiContext);
+  const { openCreateModal } = useContext(UiContext);
 
-  const isEnrolled = enrollments?.some((enrollment) => enrollment.id === course.id);
-  console.log("isEnrolled: ", isEnrolled)
-  console.log("enrollments: ", enrollments);
-  console.log("course: ", course);
+  const isEnrolled = enrollments?.some(
+    (enrollment) => enrollment.id === course.id
+  );
+  
   useEffect(() => {
     setIsVisible(true);
     document.body.style.overflow = "hidden";
@@ -32,29 +35,36 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
     if (user && !isEnrolled) {
       enroll(course.id);
     }
-  }
+  };
   const handleModalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
   const handleEditModal = (e: any) => {
-    //onClose()
     e.stopPropagation();
+    onClose()
+    setCurrentCourse(course);
     openCreateModal(true);
-  }
+  };
+
+  console.log(course.initDate)
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
       onClick={onClose}
     >
       <div
         className="bg-white rounded-lg shadow-2xl w-full max-w-3xl relative flex flex-col transform transition-transform duration-300 ease-in-out"
         onClick={handleModalClick}
-        style={{ transform: isVisible ? 'scale(1)' : 'scale(0.95)' }}
+        style={{ transform: isVisible ? "scale(1)" : "scale(0.95)" }}
       >
         <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4 relative flex items-center">
-          <h1 className="text-3xl font-bold text-white mb-2 flex-1">{course.courseName}</h1>
+          <h1 className="text-3xl font-bold text-white mb-2 flex-1">
+            {course.courseName}
+          </h1>
           {user?.role === "admin" && (
             <button
               className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
@@ -64,11 +74,10 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
             </button>
           )}
 
-          {user?.role === "admin" && (<button
-            className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
-          >
-            <FaTrash />
-          </button>
+          {user?.role === "admin" && (
+            <button className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2">
+              <FaTrash />
+            </button>
           )}
           <button
             className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900"
@@ -90,35 +99,53 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
           </div>
           <div className="grid grid-cols-2 gap-4 w-full">
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Price:</strong> ${course.price}</p>
+              <p className="text-md text-gray-800">
+                <strong>Price:</strong> ${course.price}
+              </p>
             </div>
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Duration:</strong> {course.duration} hours</p>
+              <p className="text-md text-gray-800">
+                <strong>Duration:</strong> {course.duration} hours
+              </p>
             </div>
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Capacity:</strong> {course.capacity} students</p>
+              <p className="text-md text-gray-800">
+                <strong>Capacity:</strong> {course.capacity} students
+              </p>
             </div>
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Category:</strong> {course.categoryName}</p>
+              <p className="text-md text-gray-800">
+                <strong>Category:</strong> {course.categoryName}
+              </p>
             </div>
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Rating:</strong> {course.ratingavg.toFixed(1)}</p>
+              <p className="text-md text-gray-800">
+                <strong>Rating:</strong> {course.ratingavg.toFixed(1)}
+              </p>
             </div>
             <div className="bg-purple-100 p-4 rounded-lg shadow-sm">
-              <p className="text-md text-gray-800"><strong>Start Date:</strong> {new Date(course.initDate).toLocaleDateString()}</p>
+              <p className="text-md text-gray-800">
+                <strong>Start Date:</strong>{" "}
+                {new Date(course.initDate).toLocaleDateString()}
+              </p>
             </div>
           </div>
           <div className="w-full mt-5">
             <button
               className={`transition-all duration-300 ease-in-out ${
-                user && !isEnrolled ? "bg-gradient-to-r from-purple-600 to-pink-600 " : 
-                user && isEnrolled ? "bg-gradient-to-r from-green-500 to-blue-500" :
-                "bg-orange-500"
+                user && !isEnrolled
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 "
+                  : user && isEnrolled
+                  ? "bg-gradient-to-r from-green-500 to-blue-500"
+                  : "bg-orange-500"
               } w-full text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300 ease-in-out`}
               onClick={handleEnroll}
             >
-              {user && !isEnrolled ? "Enroll" : 
-              user && isEnrolled ? "Enrolled" : "Login to enroll"}
+              {user && !isEnrolled
+                ? "Enroll"
+                : user && isEnrolled
+                ? "Enrolled"
+                : "Login to enroll"}
             </button>
           </div>
         </div>
