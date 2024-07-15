@@ -1,12 +1,13 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import { AuthContext, CoursesContext } from "@/context";
+import { AuthContext, CoursesContext , UiContext} from "@/context";
 import { uploadImage } from "@/utils";
 
 interface CreateCourseModalProps {
   onClose: () => void;
 }
+
 
 interface NewCategoryModalProps {
   onClose: () => void;
@@ -72,6 +73,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
   onClose,
 }) => {
   const { user } = useContext(AuthContext);
+  const {isEdit} = useContext(UiContext);
   const { categories, newCategory, createCourse } = useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -86,6 +88,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
     initDate: "",
   });
 
+  console.log("isEdit: ", isEdit);
   const handlerCreateCourse = () => {
     const data = {
       ...courseData,
@@ -167,7 +170,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
         >
           <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4">
             <h1 className="text-3xl font-bold text-white mb-2">
-              Create Course
+              {isEdit ? "Update Course" : "Create Course"}
             </h1>
             <button
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900"

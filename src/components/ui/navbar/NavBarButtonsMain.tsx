@@ -63,7 +63,7 @@ export const NavBarMainButtons = ({
           {user?.role == "admin" && (
               <button className="bg-purple-700 relative left-16 flex justify-center items-center 
               text-white py-4 px-5 rounded-2xl transition-all ease-in-out duration-300 hover:opacity-80"
-              onClick={openCreateModal}
+              onClick={() => openCreateModal(true)}
               >
                 <AddIcon className="mr-3"/>
                 Create course

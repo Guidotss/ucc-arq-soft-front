@@ -2,7 +2,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Course } from "@/types";
 import Image from "next/image";
-import { AuthContext, CoursesContext } from "@/context";
+import { AuthContext, CoursesContext , UiContext} from "@/context";
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface CourseModalProps {
   course: Course;
@@ -13,8 +14,9 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
   const { user } = useContext(AuthContext);
   const { enrollments, enroll } = useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
+  const {openCreateModal} = useContext(UiContext);
 
-  const isEnrolled = enrollments.some((enrollment) => enrollment.id === course.id);
+  const isEnrolled = enrollments?.some((enrollment) => enrollment.id === course.id);
   console.log("isEnrolled: ", isEnrolled)
   console.log("enrollments: ", enrollments);
   console.log("course: ", course);
@@ -35,6 +37,12 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
     e.stopPropagation();
   };
 
+  const handleEditModal = (e: any) => {
+    //onClose()
+    e.stopPropagation();
+    openCreateModal(true);
+  }
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
@@ -45,10 +53,25 @@ export const CourseModal: React.FC<CourseModalProps> = ({ course, onClose }) => 
         onClick={handleModalClick}
         style={{ transform: isVisible ? 'scale(1)' : 'scale(0.95)' }}
       >
-        <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4">
-          <h1 className="text-3xl font-bold text-white mb-2">{course.courseName}</h1>
+        <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4 relative flex items-center">
+          <h1 className="text-3xl font-bold text-white mb-2 flex-1">{course.courseName}</h1>
+          {user?.role === "admin" && (
+            <button
+              className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
+              onClick={handleEditModal}
+            >
+              <FaEdit />
+            </button>
+          )}
+
+          {user?.role === "admin" && (<button
+            className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
+          >
+            <FaTrash />
+          </button>
+          )}
           <button
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900"
+            className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900"
             onClick={onClose}
           >
             ✕

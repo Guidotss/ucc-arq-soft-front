@@ -57,7 +57,7 @@ export const coursesReducer = (
       const course = state.courses.find((course) => course.id === action.payload);
       return {
         ...state,
-        enrollments: [...state.enrollments, course!],
+        enrollments: [...state?.enrollments, course!],
       };
     default:
       return state;

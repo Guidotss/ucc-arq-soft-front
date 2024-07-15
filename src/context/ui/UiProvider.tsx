@@ -10,27 +10,41 @@ interface UiProviderProps {
 }
 
 export interface UiState {
-    isCreateModalOpen: boolean;
+  isCreateModalOpen: boolean;
+  isEdit: boolean;
 }
 
 const UI_INITIAL_STATE: UiState = {
-    isCreateModalOpen: false,
+  isCreateModalOpen: false,
+  isEdit: false,
 };
 
 export const UiProvider: FC<UiProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
   const { showToast } = useToast();
 
-    const openCreateModal = () => {
-        dispatch({ type: "[Ui] - Open Create Modal" });
-    }
-    const closeCreateModal = () => {
-        dispatch({ type: "[Ui] - Close Create Modal" });
-    }
+  const openCreateModal = (isEdit?: boolean) => {
+    console.log("isEdit provider openCreateModal: ", isEdit)
+    !!isEdit
+      ? dispatch({ type: "[Ui] - Open Edit Modal" })
+      : dispatch({ type: "[Ui] - Open Create Modal" });
+  };
+  const closeCreateModal = (isEdit?: boolean) => {
+    console.log("isEdit provider closeCreateModal: ", isEdit)
+    !!isEdit
+      ? dispatch({ type: "[Ui] - Close Edit Modal" })
+      : dispatch({ type: "[Ui] - Close Create Modal" });
+  };
 
-  return <UiContext.Provider value={{
-    ...state,
-    openCreateModal,
-    closeCreateModal,
-  }}>{children}</UiContext.Provider>;
+  return (
+    <UiContext.Provider
+      value={{
+        ...state,
+        openCreateModal,
+        closeCreateModal,
+      }}
+    >
+      {children}
+    </UiContext.Provider>
+  );
 };
