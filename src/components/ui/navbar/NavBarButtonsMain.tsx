@@ -71,7 +71,7 @@ export const NavBarMainButtons = ({
           )}
 
         </div>
-      ) : pathname === "/my-courses" ? (
+      ) : pathname === "/my-courses" || pathname === "/course-info" ?(
         <>
           <Link href="/courses">
             <span className="text-white">All courses</span>

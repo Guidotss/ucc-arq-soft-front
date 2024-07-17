@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { AuthContext, CoursesContext, UiContext } from "@/context";
 import { uploadImage } from "@/utils";
+import { on } from "events";
 
 interface CreateCourseModalProps {
   onClose: () => void;
@@ -73,7 +74,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
 }) => {
   const { user } = useContext(AuthContext);
   const { isEdit } = useContext(UiContext);
-  const { categories, newCategory, createCourse, currentCourse } =
+  const { categories, newCategory, createCourse, currentCourse , updateCourse } =
     useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -84,10 +85,11 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
     price: isEdit ? currentCourse?.price : "",
     duration: isEdit ? currentCourse?.duration : "",
     capacity: isEdit ? currentCourse?.capacity : "",
-    category: isEdit ? currentCourse?.categoryId ?? "" : "",
-    initDate: isEdit ? currentCourse?.initDate ?? "" : new Date().toISOString().split("T")[0],
+    category: isEdit ? currentCourse?.category_id ?? "" : "",
+    initDate: isEdit ? currentCourse?.initDate ??  new Date().toISOString().split("T")[0] :  new Date().toISOString().split("T")[0],
   });
-  
+  console.log("currentCourse: ", currentCourse)
+  console.log("courseData: ", courseData)
   const handlerCreateCourse = () => {
     const data = {
       ...courseData,
@@ -155,6 +157,21 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
     }));
   };
 
+  const handlerEditCourse = () => {
+    const data = {
+      ...courseData,
+      id: currentCourse?.id! || "", 
+      price: +courseData.price! || 0,
+      duration: +courseData.duration! || 0,
+      capacity: +courseData.capacity! || 0,
+      category_id: courseData.category,
+      init_date: courseData.initDate,
+      state: true,
+    };
+    updateCourse(data);
+    onClose();
+  };
+
   
 
   return (
@@ -170,7 +187,9 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
           onClick={handleModalClick}
           style={{ transform: isVisible ? "scale(1)" : "scale(0.95)" }}
         >
-          <div className="w-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-lg p-4">
+          <div className={`w-full bg-gradient-to-r rounded-t-lg p-4 
+            ${isEdit ? "bg-gradient-to-r from-green-500 to-blue-500" 
+              : "from-purple-600 to-pink-600"} `} >
             <h1 className="text-3xl font-bold text-white mb-2">
               {isEdit ? "Update Course" : "Create Course"}
             </h1>
@@ -182,7 +201,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
             </button>
           </div>
 
-          <form className="p-6" onSubmit={handlerCreateCourse}>
+          <form className="p-6">
             <div className="flex flex-row mb-4">
               <div className="relative w-1/2 mr-6">
                 {courseData.image ? (
@@ -213,6 +232,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
                 placeholder="Course Description"
                 className="text-lg text-gray-700 w-1/2 resize-none rounded-lg border border-gray-300 p-2"
                 rows={10}
+                maxLength={260}
                 required
               />
             </div>
@@ -257,6 +277,7 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
                 value={courseData.category}
                 className="bg-purple-100 p-4 rounded-lg shadow-sm text-md text-gray-800 border border-gray-300"
                 onChange={handleSelectChange}
+                onLoad={handleSelectChange}
                 required
               >
                 {!isEdit && <option value="">Select Category</option>}
@@ -284,14 +305,26 @@ export const CreateCourseModal: React.FC<CreateCourseModalProps> = ({
               />
             </div>
             <div className="w-full mt-5">
-              <button
-                className="bg-gradient-to-r from-purple-600 to-pink-600 w-full
-                 text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 
-                 transition-all duration-300 ease-in-out"
-                type="submit"
-              >
-                Create Course
-              </button>
+              {isEdit ? (
+                <button
+                  className="bg-gradient-to-r from-green-500 to-blue-500 w-full
+                   text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 
+                   transition-all duration-300 ease-in-out"
+                  onClick={handlerEditCourse}
+                >
+                  Save Changes
+                </button>
+              ) : (
+                <button
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 w-full
+                   text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 
+                   transition-all duration-300 ease-in-out"
+                  onClick={handlerCreateCourse}
+                >
+                  Create Course
+                </button>
+                )
+              }
             </div>
           </form>
         </div>

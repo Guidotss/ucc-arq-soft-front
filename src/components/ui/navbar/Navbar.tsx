@@ -19,7 +19,13 @@ export const Navbar = () => {
   return (
     <div
       ref={ref}
-      className={`w-[95vw] red-200 fixed flex justify-between items-center backdrop-blur-xl ${bgColor} font-bold p-5 shadow-lg rounded-xl z-10 transition-all duration-300 ease-out mt-1`}
+      className={pathname == "/course-info" ? `w-[95vw] fixed flex justify-between items-center backdrop-blur-xl 
+             bg-gradient-to-r from-[rgba(128,0,128,0.8)] via-[rgba(219,112,147,0.8)] to-[rgba(255,105,180,0.8)]
+             font-bold p-5 shadow-lg rounded-xl z-10 transition-all duration-300 ease-out mt-1`
+        : `w-[95vw] red-200 fixed flex justify-between 
+        items-center backdrop-blur-xl ${bgColor} 
+        font-bold p-5 shadow-lg rounded-xl z-10 
+        transition-all duration-300 ease-out mt-1`}
     >
       <Link className="flex items-center" href="/">
         <Image

@@ -6,10 +6,8 @@ import { Course } from "@/types";
 import { CoursesContext } from "@/context";
 
 
-
 export default function MyCoursesPage() {
 const { enrollments } = useContext(CoursesContext);
-console.log("enrollments: ", enrollments);
 const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   return (
     <main className="mt-32">

@@ -4,6 +4,8 @@ import { Course } from "@/types";
 import Image from "next/image";
 import { AuthContext, CoursesContext, UiContext } from "@/context";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { usePathname, useRouter } from "next/navigation";
+
 
 interface CourseModalProps {
   course: Course;
@@ -14,14 +16,13 @@ export const CourseModal: React.FC<CourseModalProps> = ({
   course,
   onClose,
 }) => {
+  const pathname = usePathname();
+  const router = useRouter(); 
   const { user } = useContext(AuthContext);
-  const { enrollments, enroll, setCurrentCourse } = useContext(CoursesContext);
+  const { setCurrentCourse , deleteCourse } = useContext(CoursesContext);
   const [isVisible, setIsVisible] = useState(false);
   const { openCreateModal } = useContext(UiContext);
-
-  const isEnrolled = enrollments?.some(
-    (enrollment) => enrollment.id === course.id
-  );
+ 
   
   useEffect(() => {
     setIsVisible(true);
@@ -31,11 +32,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
     };
   }, []);
 
-  const handleEnroll = () => {
-    if (user && !isEnrolled) {
-      enroll(course.id);
-    }
-  };
+
   const handleModalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -47,7 +44,14 @@ export const CourseModal: React.FC<CourseModalProps> = ({
     openCreateModal(true);
   };
 
-  console.log(course.initDate)
+  const handleSeeMore = () => {
+  setCurrentCourse(course);
+  router.push('/course-info');
+  };
+  const handleDelete = () => {
+    deleteCourse(course.id);
+    onClose();
+  }
 
   return (
     <div
@@ -65,7 +69,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
           <h1 className="text-3xl font-bold text-white mb-2 flex-1">
             {course.courseName}
           </h1>
-          {user?.role === "admin" && (
+          {user?.role === "admin" && pathname !== "/my-courses" &&(
             <button
               className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
               onClick={handleEditModal}
@@ -74,8 +78,10 @@ export const CourseModal: React.FC<CourseModalProps> = ({
             </button>
           )}
 
-          {user?.role === "admin" && (
-            <button className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2">
+          {user?.role === "admin" && pathname !== "/my-courses" && (
+            <button className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-600 hover:text-gray-900 mr-2"
+            onClick={handleDelete}
+            >
               <FaTrash />
             </button>
           )}
@@ -132,20 +138,13 @@ export const CourseModal: React.FC<CourseModalProps> = ({
           </div>
           <div className="w-full mt-5">
             <button
-              className={`transition-all duration-300 ease-in-out ${
-                user && !isEnrolled
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 "
-                  : user && isEnrolled
-                  ? "bg-gradient-to-r from-green-500 to-blue-500"
-                  : "bg-orange-500"
-              } w-full text-white px-5 py-3 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300 ease-in-out`}
-              onClick={handleEnroll}
+              className={`transition-all duration-300 ease-in-out 
+                bg-gradient-to-r from-purple-600 to-pink-600 
+                w-full text-white px-5 py-3 rounded-lg shadow-md 
+                hover:bg-opacity-90`}
+              onClick={() => handleSeeMore()}
             >
-              {user && !isEnrolled
-                ? "Enroll"
-                : user && isEnrolled
-                ? "Enrolled"
-                : "Login to enroll"}
+            See more
             </button>
           </div>
         </div>

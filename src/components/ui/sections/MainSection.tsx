@@ -8,10 +8,11 @@ import { AuthContext, CoursesContext } from "@/context";
 
 export const MainSection = () => {
   const { user } = useContext(AuthContext);
-  const { fetchCourses , myCourses} = useContext(CoursesContext);
+  const { fetchCourses , myCourses , getRatings} = useContext(CoursesContext);
   useEffect(() => {
     fetchCourses();
     myCourses();
+    getRatings();
   }, []);
   const ref = useRef<HTMLDivElement>(null);
   return (

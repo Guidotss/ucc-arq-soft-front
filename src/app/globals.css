@@ -11,6 +11,35 @@
 }
 
 
+.ratingStars {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.ratingStars input {
+  display: none;
+}
+
+.ratingStars label {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.ratingStars label:before {
+  content: '\2605';
+  /*font-size: 50px;*/
+}
+
+.ratingStars input:checked ~ label,
+.ratingStars label:hover,
+.ratingStars label:hover ~ label {
+  color: #ffff00;
+  transition: color 0.3s;
+}
+
+
 .swiper_container {
   height: 40rem;
   /*padding: 2rem 0;*/

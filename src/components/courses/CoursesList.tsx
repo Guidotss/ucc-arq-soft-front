@@ -18,7 +18,6 @@ export const CoursesList = () => {
   const shouldShowAllCourses = pathname === "/courses";
   const coursesToDisplay = shouldShowAllCourses ? coursesFiltered : coursesFiltered.slice(0, 4);
 
-
   return (
     <>
     <div className="flex flex-col justify-center ">

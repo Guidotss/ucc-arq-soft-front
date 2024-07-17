@@ -8,7 +8,7 @@ export const courseMapper = (course: any): Course => {
     price: course.price ?? 0,
     duration: course.duration ?? 0,
     capacity: course.capacity ?? 15,
-    categoryId: course.categoryId ?? "",
+    category_id: course.category_id ?? "",
     initDate: course.init_date ?? new Date(),
     state: course.state ?? true,
     image: course.image,

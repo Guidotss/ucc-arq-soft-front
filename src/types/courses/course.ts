@@ -5,7 +5,7 @@ export type Course = {
   price: number;
   duration: number;
   capacity: number;
-  categoryId: string;
+  category_id: string;
   initDate: string;
   state: boolean;
   image: string;
