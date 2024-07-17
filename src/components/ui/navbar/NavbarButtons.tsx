@@ -1,20 +1,19 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { AuthContext } from "@/context";
+import { UserButton } from "./UserButton";
 
 export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
   const { user } = useContext(AuthContext);
   console.log(user);
 
-  if (pathName === "/") {
+  if (pathName === "/" || pathName.includes("/courses") || pathName.includes("/my-courses") || pathName.includes("/course-info")) {
     return !user ? (
       <Link href="/auth/login">
         <p className="navbar-button">Get Started</p>
       </Link>
     ) : (
-      <Link href="/dashboard">
-        <p className="navbar-button">Dashboard</p>
-      </Link>
+      <UserButton user={user} />
     );
   }
 
@@ -33,6 +32,14 @@ export const NavbarButtons = ({ pathName }: Readonly<{ pathName: string }>) => {
       </Link>
     );
   }
+  if (pathName.includes("/courses")) {
+    return (
+      <Link href="/auth/login">
+        <p className="navbar-button">Login</p>
+      </Link>
+    );
+  }
+  
 
   return null;
 };

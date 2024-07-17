@@ -24,7 +24,7 @@ export const useNavbar = () => {
     const scrollHandler = () => {
       if (window.scrollY > 500) {
         setBgColor("bg-navbar");
-      } else {
+      } else if (window.scrollY < 500 && pathname === "/"){
         setBgColor("bg-transparent");
       }
     };
@@ -39,7 +39,7 @@ export const useNavbar = () => {
   const handleNavigateAbout = () => {
     if (pathname === "/") {
       window.scrollTo({
-        top: ref?.current?.offsetHeight! + window.innerHeight,
+        top: ref?.current?.offsetHeight! + window.innerHeight - 80,
         behavior: "smooth",
       });
     } else {
@@ -60,7 +60,7 @@ export const useNavbar = () => {
   const handleNavigateCourses = () => {
     if (pathname === "/") {
       window.scrollTo({
-        top: ref?.current?.offsetHeight! + window.innerHeight + 350,
+        top: ref?.current?.offsetHeight! + window.innerHeight + 850,
         behavior: "smooth",
       });
     } else {

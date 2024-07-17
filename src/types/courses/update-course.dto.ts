@@ -1,4 +1,5 @@
-export type CreateCoursesDto = { 
+export type UpdateCoursesDto = {
+    id: string 
     course_name: string; 
     description: string;
     price: number;
