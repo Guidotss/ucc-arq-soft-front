@@ -25,7 +25,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
     >
         <div className="px-3 bg-slate-800 shadow-md rounded-2xl justify-between text-lg tracking-widest w-40 py-2.5 text-slate-50 flex gap-2 ">
             <button className="ml-4">
-                {user.username.split(" ")[0]}
+                {user.name.split(" ")[0]}
             </button>
             <img src={user.avatar} className="w-10 h-10 rounded-full" />
         </div>

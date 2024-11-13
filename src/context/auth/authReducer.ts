@@ -12,6 +12,7 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case "[Auth] - Login":
+      console.log("action.payload.userData: ", action.payload.userData);
       return {
         ...state,
         user: { 

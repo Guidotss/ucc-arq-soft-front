@@ -45,8 +45,10 @@ export const CourseModal: React.FC<CourseModalProps> = ({
   };
 
   const handleSeeMore = () => {
-  setCurrentCourse(course);
-  router.push('/course-info');
+    console.log("course: ", course);
+    setCurrentCourse(course);
+  
+    router.push('/course-info');
   };
   const handleDelete = () => {
     deleteCourse(course.id);

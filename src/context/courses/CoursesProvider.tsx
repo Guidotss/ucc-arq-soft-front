@@ -40,6 +40,8 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
     myCourses();
   }, []);
 
+  console.log("state: ", state);
+
   const fetchCourses = async () => {
     try {
       const reponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
@@ -83,8 +85,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   const getRatings = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/rating`
-      );
+        `${process.env.NEXT_PUBLIC_API_URL}/rating`);
       const data = await response.json();
       if (response.status !== 200) {
         showToast("Error al cargar las calificaciones", "error");
@@ -316,7 +317,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   const filterCourses = async (search: string) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/courses?filter=${search}`
+        `${process.env.NEXT_PUBLIC_API_URL}/courses?q=${search}`
       );
       const data = await response.json();
       const courses = data.map((course: any) => courseMapper(course));
@@ -395,7 +396,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
       showToast("Error al cargar las categorias", "error");
     }
   };
-  const enroll = async (courseId: string) => {
+  const enroll = async (courseId: string, userId: string) => {
     try {
       const token = Cookies.get("token");
       if (!token) {
@@ -408,7 +409,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ course_id: courseId }),
+          body: JSON.stringify({ course_id: courseId, user_id: userId }),
         }
       );
       if (response.status !== 201) {

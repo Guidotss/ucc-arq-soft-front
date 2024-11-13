@@ -27,11 +27,12 @@ export const coursesReducer = (
       return {
         ...state,
         comments: action.payload
-    }
+      }
     case "[Courses] - Load All":
       return {
         ...state,
         courses: action.payload,
+        enrollments: JSON.parse(localStorage.getItem("enrollments") || "[]"),
         coursesFiltered: action.payload,
       };
     case "[Ratings] - Load All Ratings":
@@ -83,9 +84,15 @@ export const coursesReducer = (
       };
     case "[Courses] - Enroll":
       const course = state.courses.find((course) => course.id === action.payload);
+      if (!course) return state;
+
+      localStorage.setItem("enrollments", JSON.stringify([...state.enrollments, course]));
       return {
         ...state,
-        enrollments: [...state?.enrollments, course!],
+        enrollments: [
+          ...(state.enrollments || []),
+          course
+        ]
       };
     case "[Courses] - Set Current":
       return {

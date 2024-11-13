@@ -3,7 +3,7 @@ import { useReducer, FC, useEffect } from "react";
 import cookies from "js-cookie";
 import { AuthContext, authReducer } from ".";
 import { LoginDto, RegisterDto, AuthResponse, User } from "@/types";
-import { useToast } from "@/utils";
+import { registerUserMapper, useToast } from "@/utils";
 
 export interface AuthState {
   user: User | null;
@@ -37,7 +37,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         showToast("Please fill in all fields", "error");
         return false;
       }
-      console.log("RegisterDTO: ", registerDto);
+      const body = registerUserMapper(registerDto);
       const reponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
         {
@@ -45,7 +45,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(registerDto),
+          body: JSON.stringify(body),
         }
       );
       if (reponse.ok) {
@@ -53,7 +53,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         cookies.set("token", data.token);
         dispatch({
           type: "[Auth] - Login",
-          payload: { userData: data.user, token: data.token },
+          payload: { userData: { ...data}} as any,
         });
         return true;
       }
@@ -109,7 +109,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
           },
         }
       );

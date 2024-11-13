@@ -24,7 +24,7 @@ interface CoursesContextProps {
   setCurrentCourse: (course: Course) => void;
   newCategory : (category: string) => void;
   getCategories : () => void;
-  enroll: (courseId: string) => void;
+  enroll: (courseId: string, userId: string) => void;
   cleanCourseList: () => void;
   fetchCourses: () => void;
 }

@@ -43,7 +43,8 @@ export default function CoursePage() {
 
   const handleEnroll = () => {
     if (user && !isEnrolled) {
-      enroll(currentCourse?.id as string);
+      console.log("currentCourse?.id: ", currentCourse?.id);
+      enroll(currentCourse?.id as string, user?.id as string);
     }
   };
 
