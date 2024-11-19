@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8000
+        NEXT_PUBLIC_API_URL: https://3e8236e757c2bb5bebeef5057ce34918.serveo.net
     ports:
       - "3000:3000"
     networks:

@@ -343,9 +343,13 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
           },
         }
       );
-      console.log(response);
+      console.log("response de mis cursos",response);
       if (response.status === 500) {
         showToast("Error al cargar mis cursos", "error");
+        return;
+      }
+      if (response.status === 404) {
+        dispatch({ type: "[Courses] - My Courses", payload: [] });
         return;
       }
       const data = await response.json();

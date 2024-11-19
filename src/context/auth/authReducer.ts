@@ -12,13 +12,13 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case "[Auth] - Login":
-      console.log("action.payload.userData: ", action.payload.userData);
       return {
         ...state,
-        user: { 
+        user: action.payload.userData
+/*         user: { 
           ...action.payload.userData,
           role: Number(action.payload.userData.role) === 0 ? "user" : "admin",
-        },
+        }, */,
         token: action.payload.token,
       };
     case "[Auth] - Logout":

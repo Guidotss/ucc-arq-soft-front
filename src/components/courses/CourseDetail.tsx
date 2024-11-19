@@ -23,6 +23,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const { openCreateModal } = useContext(UiContext);
  
+  console.log("user: ", user);
   
   useEffect(() => {
     setIsVisible(true);

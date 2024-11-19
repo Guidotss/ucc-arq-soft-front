@@ -82,6 +82,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       if (response.ok) {
         const data: AuthResponse = await response.json();
 
+        console.log("data user login: ", data.user);
+
         dispatch({
           type: "[Auth] - Login",
           payload: { userData: data.user, token: data.token },
@@ -115,6 +117,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       );
       if (reponse.ok) {
         const data: AuthResponse = await reponse.json();
+
+        console.log("data user refresh: ", data.user);
+
         dispatch({
           type: "[Auth] - Login",
           payload: { userData: data.user, token: data.token },
