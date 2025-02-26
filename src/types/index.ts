@@ -5,3 +5,4 @@ export * from "./courses";
 export * from "./categories"
 export * from "./comments"
 export * from "./ratings"
+export * from "./admin"

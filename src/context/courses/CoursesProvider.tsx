@@ -40,11 +40,9 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
     myCourses();
   }, []);
 
-  console.log("state: ", state);
-
   const fetchCourses = async () => {
     try {
-      const reponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
+      const reponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search-courses`);
       if (reponse.ok) {
         const data = await reponse.json();
         console.log("Courses from server: ", data);
@@ -317,7 +315,7 @@ export const CoursesProvider: FC<CoursesProviderProps> = ({ children }) => {
   const filterCourses = async (search: string) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/courses?q=${search}`
+        `${process.env.NEXT_PUBLIC_API_URL}/search-courses?q=${search}`
       );
       const data = await response.json();
       const courses = data.map((course: any) => courseMapper(course));

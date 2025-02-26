@@ -77,6 +77,14 @@ export const NavBarMainButtons = ({
             <span className="text-white">All courses</span>
           </Link>
         </>
+      ) : pathname === "/admin" ? (
+        <>
+          <span 
+            className="text-white text-3xl font-bold tracking-wide px-4 py-2 rounded-lg shadow-md"
+          >
+            Admin Panel
+          </span>
+        </>
       ) : null}
     </nav>
   );
